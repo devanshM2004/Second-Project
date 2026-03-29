@@ -2,84 +2,82 @@
 
 ## Overview
 
-This project demonstrates my ability to use AI tools (Claude) to build, analyze, and understand financial statements while developing real-world finance skills beyond my coursework.
+This project demonstrates my ability to use AI (Claude) to build, analyze, and understand financial statements while developing real-world finance skills beyond my coursework.
 
-Instead of relying solely on traditional education, I am using AI to:
+Rather than relying solely on traditional education, I am actively using AI to:
 
 * Build financial statements from scratch
-* Understand how business operations translate into financial outputs
+* Understand how business activity flows through financial statements
 * Analyze company performance and decision-making
 * Develop practical, job-relevant finance skills
 
-## What This Project Shows
+## What This Project Demonstrates
 
-This repository highlights my ability to:
-
-* Use AI as a productivity and learning tool (not just a shortcut)
-* Structure financial data into income statements, balance sheets, and cash flow statements
-* Document assumptions and verify outputs
-* Connect financial statements to real business decisions
-* Communicate financial insights clearly
+* AI proficiency applied to real business problems
+* Ability to construct income statements, balance sheets, and cash flow statements
+* Understanding of how financial statements are linked
+* Strong documentation of assumptions and logic
+* Ability to extract business insights from financial data
 
 ## Repository Structure
 
 ### /companies
 
-Each company folder contains a full case study:
+Each company includes:
 
 * assumptions.md → Key modeling assumptions
-* source_notes.md → Data sources and references
+* source_notes.md → Data sources
 * income_statement.xlsx → Income statement
 * balance_sheet.xlsx → Balance sheet
 * cash_flow_statement.xlsx → Cash flow statement
-* three_statement_model.xlsx → Integrated financial model
-* analysis.md → Business insights and conclusions
+* three_statement_model.xlsx → Integrated model
+* analysis.md → Business insights
 
 ### /templates
 
-Reusable templates for building new financial models
+Reusable templates for building models
 
 ### /scripts
 
-Automation or helper tools (if used later)
+Automation tools (future use)
 
 ## Methodology
 
 For each company:
 
-1. Identify key revenue and cost drivers
-2. Build assumptions based on realistic business logic
-3. Construct financial statements
-4. Link all three statements together
+1. Identify revenue and cost drivers
+2. Create realistic assumptions
+3. Build financial statements
+4. Link all three statements
 5. Analyze results and extract insights
 
-## Use of AI (Claude)
+## Use of AI
 
-AI is used to:
+Claude is used to:
 
 * Structure financial models
-* Assist with calculations and logic
-* Generate draft financial statements
-* Accelerate iteration and learning
+* Assist with calculations
+* Generate draft outputs
+* Accelerate learning
 
 However:
 
-* All outputs are reviewed and validated manually
-* Assumptions are explicitly documented
-* Results are treated as educational models, not audited financials
+* All outputs are reviewed manually
+* Assumptions are clearly documented
+* Models are educational, not audited
 
-## Why This Matters
+## Why This Project Matters
 
 This project reflects my ability to:
 
 * Learn independently
 * Apply finance concepts in practice
-* Use modern tools (AI) effectively
-* Translate data into business insight
+* Use AI effectively in a professional setting
+* Translate financial data into business insight
 
 ## Next Steps
 
-* Add more companies across different industries
-* Improve model accuracy and complexity
-* Incorporate real financial data where possible
-* Build forecasting and scenario analysis models
+* Add more companies
+* Improve model accuracy
+* Incorporate real financial data
+* Build forecasting models
