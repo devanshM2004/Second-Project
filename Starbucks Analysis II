@@ -1,0 +1,15 @@
+companies/starbucks/analysis.md
+# Analysis
+
+## Overview
+This model provides a simplified view of Starbucks' financial performance.
+
+## Key Insights
+- Revenue growth is driven by store expansion and pricing power
+- High operating expenses reflect retail footprint and brand investment
+- Strong margins depend on cost control and scale
+
+## Next Steps
+- Improve accuracy using real financial data
+- Build a full 3-statement model
+- Add forecasting scenarios
