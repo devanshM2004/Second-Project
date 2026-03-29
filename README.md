@@ -2,67 +2,70 @@
 
 ## Overview
 
-This project is a hands-on finance portfolio where I use AI (Claude) to build and understand financial statements from scratch.
+This project is a hands-on finance portfolio built to help me learn how financial statements work in a practical, structured way using AI.
 
-The goal is to go beyond traditional coursework by actively applying finance concepts in a structured, real-world format.
+I created this project to go beyond traditional coursework and actively build the kinds of skills used in real finance and business roles. Instead of only reading about financial statements, I am constructing them, documenting assumptions, and analyzing what they say about a company.
+
+## Purpose
+
+This project helps me:
+
+* learn how the income statement, balance sheet, and cash flow statement work
+* understand how business assumptions affect financial outcomes
+* practice translating business activity into financial results
+* use AI as a learning and productivity tool in a professional workflow
+* build a portfolio I can discuss with recruiters, interviewers, and working professionals
 
 ## What This Project Demonstrates
 
-* Ability to construct income statements, balance sheets, and cash flow statements
-* Understanding of how financial statements are connected
-* Strong documentation of assumptions and financial logic
-* Ability to translate business activity into financial outcomes
-* Practical use of AI as a productivity and learning tool
+* practical use of AI for finance learning and financial modeling
+* understanding of core financial statements
+* ability to document assumptions and financial logic
+* ability to organize finance work clearly in GitHub
+* ability to extract insights from simplified company models
 
-## Project Structure
+## Current Project Structure
 
-### companies/starbucks
+### `companies/starbucks`
 
-This folder contains a full financial case study for Starbucks:
+This folder contains a simplified financial statement case study for Starbucks:
 
-* assumptions.md → Key business and financial assumptions
-* income_statement.md → Profitability and performance
-* balance_sheet.md → Financial position
-* cash_flow_statement.md → Cash movement (coming next)
-* analysis.md → Key insights and conclusions
-* source_notes.md → Supporting context and references
+* `assumptions.md` — key business and modeling assumptions
+* `source_notes.md` — supporting context and future data sources
+* `analysis.md` — high-level business insights
+* `income_statement.md` — simplified income statement
+* `balance_sheet.md` — simplified balance sheet
+* `cash_flow_statement.md` — simplified cash flow statement
 
 ## Methodology
 
-For each company:
+For each company in this portfolio, I follow a structured process:
 
-1. Define revenue and cost drivers
-2. Build assumptions based on business logic
-3. Construct financial statements
-4. Ensure statements are internally consistent
-5. Analyze results and extract insights
+1. identify the main business drivers
+2. define financial and operating assumptions
+3. build the income statement
+4. build the balance sheet
+5. build the cash flow statement
+6. analyze what the statements show about the business
 
 ## Use of AI
 
-AI (Claude) is used to:
+I use AI tools such as Claude to help me:
 
-* Structure financial models
-* Assist with calculations
-* Accelerate learning and iteration
+* structure projects and financial models
+* accelerate learning
+* organize assumptions and logic
+* iterate faster on draft outputs
 
-All outputs are:
-
-* Reviewed manually
-* Clearly labeled as estimates
-* Built for educational purposes
+All work in this repository is for educational purposes. Outputs are reviewed manually and should be treated as simplified learning models, not audited or official financial statements.
 
 ## Why This Matters
 
-This project reflects my ability to:
-
-* Learn independently
-* Apply finance concepts in practice
-* Use AI effectively in a professional workflow
-* Communicate financial insights clearly
+This project reflects my effort to build practical finance skills that were not fully developed in class. It shows initiative, self-learning, and the ability to use modern tools to better understand business and finance.
 
 ## Next Steps
 
-* Add cash flow statement and fully link all 3 statements
-* Improve realism using actual company data
-* Expand to additional companies and industries
-* Build forecasting and scenario analysis models
+* finish and refine the Starbucks 3-statement case
+* improve realism using actual company financial data
+* add more companies from different industries
+* expand from historical-style statements into forecasting and scenario analysis
