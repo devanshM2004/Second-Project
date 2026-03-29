@@ -1,1 +1,15 @@
-# Second-Project
+ai-financial-statements-portfolio/
+  README.md
+  /companies
+    /starbucks
+      assumptions.md
+      source_notes.md
+      income_statement.xlsx
+      balance_sheet.xlsx
+      cash_flow_statement.xlsx
+      three_statement_model.xlsx
+      analysis.md
+    /tesla
+    /costco
+  /templates
+  /scripts
