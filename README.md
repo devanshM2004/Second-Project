@@ -4,7 +4,7 @@
 
 This project is a hands-on finance portfolio built to help me learn how financial statements work in a practical, structured way using AI.
 
-I created this project to go beyond traditional coursework and actively build the kinds of skills used in real finance and business roles. Instead of only reading about financial statements, I am constructing them, documenting assumptions, and analyzing what they say about a company.
+I created this project to go beyond traditional coursework and actively build the kinds of skills used in real finance and business roles. Instead of only reading about financial statements, I am constructing them, documenting assumptions, and analyzing what they show about a company.
 
 ## Purpose
 
@@ -65,7 +65,7 @@ This project reflects my effort to build practical finance skills that were not 
 
 ## Next Steps
 
-* finish and refine the Starbucks 3-statement case
+* refine the Starbucks 3-statement case so the links are even tighter
 * improve realism using actual company financial data
 * add more companies from different industries
 * expand from historical-style statements into forecasting and scenario analysis
