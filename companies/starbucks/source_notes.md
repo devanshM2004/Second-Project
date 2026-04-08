@@ -1,8 +1,0 @@
-# Source Notes
-
-This model is based on general knowledge of Starbucks' business model.
-
-Future versions will incorporate:
-- Annual reports (10-K)
-- Earnings reports
-- Industry benchmarks
