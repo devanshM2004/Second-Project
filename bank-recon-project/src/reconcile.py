@@ -1,35 +1,21 @@
-# ============================================================
-# src/reconcile.py
-# ============================================================
-# PURPOSE:
-#   Compare the bank transaction file against the internal
-#   system transaction file and classify every row into one
-#   of five reconciliation statuses:
+# reconcile.py
 #
-#   MATCHED          – transaction_id in both sources AND
-#                      amount AND date are identical
-#   AMOUNT_MISMATCH  – transaction_id in both, but posted
-#                      amount differs
-#   DATE_MISMATCH    – transaction_id in both, but posting
-#                      date differs
-#   BANK_ONLY        – transaction_id in bank file only
-#                      (system never recorded it)
-#   SYSTEM_ONLY      – transaction_id in system file only
-#                      (bank never reported it → phantom entry)
+# This is the core of the project. It loads the bank file and the
+# system file, joins them together, and figures out where they disagree.
 #
-#   Duplicates are detected separately before merging and
-#   flagged in their own column so they don't distort the
-#   status counts.
+# Each transaction gets one of five status labels:
+#   MATCHED         - both sources agree (amount and date match)
+#   AMOUNT_MISMATCH - same transaction ID but different dollar amount
+#   DATE_MISMATCH   - same transaction ID but different posting date
+#   BANK_ONLY       - bank recorded it but the system never did
+#   SYSTEM_ONLY     - system recorded it but the bank never reported it
 #
-# OUTPUTS:
-#   output/reconciled_transactions.csv
-#       One row per unique transaction_id with status,
-#       variance, and a duplicate flag.
+# I also check for duplicate transaction IDs before the merge so they
+# don't create false mismatches, and flag them in their own column.
 #
-#   output/discrepancy_report.csv
-#       Filtered view containing only rows that are NOT
-#       MATCHED – the analyst's working list for resolution.
-# ============================================================
+# Outputs:
+#   output/reconciled_transactions.csv  - every transaction with its status
+#   output/discrepancy_report.csv       - just the rows that need attention
 
 import pandas as pd
 import os

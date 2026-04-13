@@ -1,49 +1,31 @@
-# ============================================================
-# src/flag_risks.py
-# ============================================================
-# PURPOSE:
-#   Read the reconciliation results and assign a RISK_LEVEL to
-#   every row using a transparent, rule-based scoring model.
-#   Also attach a plain-English RECOMMENDED_ACTION so an analyst
-#   knows exactly what to do with each flagged item.
+# flag_risks.py
 #
-# ── SCORING MODEL ────────────────────────────────────────────
+# This script reads the reconciliation results and assigns a risk level
+# (HIGH, MEDIUM, or LOW) to every row using a simple points-based model.
+# Each row also gets a plain-English recommended action.
 #
-#   Rule 1 – Discrepancy type (what kind of problem is it?)
-#     BANK_ONLY        → +3 pts  bank recorded money the system missed
-#     SYSTEM_ONLY      → +3 pts  system has an entry the bank never sent
-#     AMOUNT_MISMATCH  → +2 pts  same transaction, different dollar value
-#     DATE_MISMATCH    → +1 pt   same transaction, different posting date
-#     MATCHED          → +0 pts  no issue
+# I designed the scoring model around four questions an analyst would ask:
 #
-#   Rule 2 – Variance size (how much money is at stake?)
-#     |variance| >= 10 000  → +3 pts  large exposure
-#     |variance| >= 1 000   → +2 pts  moderate exposure
-#     |variance| >= 100     → +1 pt   minor exposure
+#   1. What type of problem is it?
+#        BANK_ONLY or SYSTEM_ONLY  → +3 pts  (record missing on one side)
+#        AMOUNT_MISMATCH           → +2 pts  (amounts disagree)
+#        DATE_MISMATCH             → +1 pt   (dates disagree)
 #
-#   Rule 3 – Duplicate transaction detected
-#     is_duplicate == True  → +2 pts  double-posting risk
+#   2. How much money is involved?
+#        |variance| >= $10,000     → +3 pts
+#        |variance| >= $1,000      → +2 pts
+#        |variance| >= $100        → +1 pt
 #
-#   Rule 4 – Repeat offender account
-#     Account has 3+ discrepancies in this cycle → +2 pts
-#     Account has 2   discrepancies in this cycle → +1 pt
-#     (Rewards analysts for spotting systemic account-level issues)
+#   3. Is it a duplicate?
+#        is_duplicate == True      → +2 pts
 #
-#   ── Score → Risk level ──────────────────────────────────────
-#     score >= 6  → HIGH    (immediate escalation required)
-#     score 3–5   → MEDIUM  (investigate this cycle)
-#     score <= 2  → LOW     (monitor, no urgent action)
+#   4. Does this account keep showing up?
+#        3+ discrepancies this cycle  → +2 pts
+#        Exactly 2 discrepancies      → +1 pt
 #
-# ── RECOMMENDED ACTIONS ──────────────────────────────────────
-#   Assigned per (status × risk_level) combination so the action
-#   is specific, not generic.
+#   Total score:  >= 6 → HIGH,  3-5 → MEDIUM,  <= 2 → LOW
 #
-# OUTPUTS:
-#   output/risk_flags.csv
-#       All rows from reconciled_transactions.csv enriched with:
-#           risk_score, risk_level, recommended_action
-#       Sorted HIGH → MEDIUM → LOW, then by |variance| descending.
-# ============================================================
+# Output: output/risk_flags.csv
 
 import pandas as pd
 import os

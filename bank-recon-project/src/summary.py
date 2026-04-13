@@ -1,32 +1,19 @@
-# ============================================================
-# src/summary.py
-# ============================================================
-# PURPOSE:
-#   Aggregate the risk-flagged reconciliation data into two
-#   analyst-ready output files:
+# summary.py
+#
+# This script rolls up the risk-flagged data into two outputs
+# that are easy to read and share:
 #
 #   output/summary_report.csv
-#       One row per account showing:
-#           - total transactions reviewed
-#           - number and rate of discrepancies
-#           - total dollar variance exposure
-#           - count of each discrepancy type
-#           - count of each risk level
-#           - highest risk level reached this cycle
-#       Plus a TOTALS row at the bottom for quick executive review.
+#       One row per account. Shows how many transactions each account
+#       had, how many had problems, the total dollar variance, and the
+#       highest risk level reached. Includes a TOTALS row at the bottom.
 #
 #   output/summary_report.txt
-#       Plain-text executive summary suitable for emailing to a
-#       manager or pasting into a reconciliation sign-off document.
-#       Includes overall stats, status breakdown, risk breakdown,
-#       the account-level table, and the top 5 items by variance.
+#       A plain-text report with overall stats, status breakdowns,
+#       risk counts, the account table, and the top 5 items by variance.
+#       The kind of thing you'd paste into an email to a manager.
 #
-# HOW IT FITS IN THE PIPELINE:
-#   generate_data → reconcile → flag_risks → summary (this file)
-#   Reads:  output/risk_flags.csv, data/accounts.csv
-#   Writes: output/summary_report.csv
-#           output/summary_report.txt
-# ============================================================
+# This runs after flag_risks.py in the pipeline.
 
 import pandas as pd
 import os

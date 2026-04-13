@@ -1,20 +1,15 @@
-# ============================================================
-# main.py  –  Bank Reconciliation and Risk Detection Model
-# ============================================================
-# Entry point for the full pipeline.
-# Run this file to execute every step in order:
+# main.py  -  Bank Reconciliation and Risk Detection Model
 #
-#   Step 1 – generate_data.py  : create synthetic CSV source files
-#   Step 2 – reconcile.py      : compare bank vs system records
-#   Step 3 – flag_risks.py     : score and flag discrepancies
-#   Step 4 – summary.py        : account-level summary report
-#   Step 5 – report.py         : export HIGH-risk action list
+# Run this file to execute the full pipeline from start to finish.
+# It calls each script in order and saves all outputs to output/.
 #
-# Usage:
-#   python main.py
+#   Step 1 - generate_data.py  : build the fake transaction data
+#   Step 2 - reconcile.py      : compare bank vs system records
+#   Step 3 - flag_risks.py     : score and flag each discrepancy
+#   Step 4 - summary.py        : roll up results by account
+#   Step 5 - report.py         : export the HIGH-risk action list
 #
-# All outputs are saved to the output/ folder.
-# ============================================================
+# Usage:  python main.py
 
 from src.generate_data import generate_all
 from src.reconcile     import run_reconciliation

@@ -1,25 +1,20 @@
-# ============================================================
-# src/generate_data.py
-# ============================================================
-# PURPOSE:
-#   Create three synthetic CSV files that mimic what a bank
-#   analyst would receive at the start of a reconciliation cycle.
+# generate_data.py
 #
-#   accounts.csv            – master list of customer accounts
-#   bank_transactions.csv   – transactions as reported by the bank
-#   system_transactions.csv – transactions recorded in the
-#                             bank's internal core-banking system
+# This script creates the fake data we need to test the reconciliation
+# pipeline. It builds three CSV files that represent what a bank analyst
+# would receive at the start of a reconciliation cycle:
 #
-# INTENTIONAL DATA QUALITY ISSUES INTRODUCED:
-#   - Missing transactions  : some bank records have no matching
-#                             system record and vice-versa
-#   - Amount mismatches     : a few records share a transaction_id
-#                             but differ in posted amount
-#   - Duplicate transactions: the same transaction appears twice
-#                             in one of the data sources
-#   - Date mismatches       : same transaction_id but different
-#                             posting date in each source
-# ============================================================
+#   accounts.csv            - the list of customer accounts
+#   bank_transactions.csv   - transactions as reported by the bank
+#   system_transactions.csv - the same transactions as recorded
+#                             by the bank's internal system
+#
+# To make this realistic and interesting, I deliberately introduced
+# four types of data problems that analysts have to catch in real life:
+#   - Missing transactions  (some records only exist on one side)
+#   - Amount mismatches     (same transaction ID, different amount)
+#   - Duplicate transactions(same transaction posted twice)
+#   - Date mismatches       (same transaction ID, different date)
 
 import pandas as pd
 import numpy as np

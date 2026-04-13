@@ -1,20 +1,13 @@
-# ============================================================
-# src/report.py
-# ============================================================
-# PURPOSE:
-#   Final step in the pipeline. Reads risk_flags.csv and exports
-#   a filtered action list for the operations team:
+# report.py
 #
-#   output/high_risk_transactions.csv
-#       Only HIGH-risk rows, sorted by |variance| descending.
-#       This is the file an analyst hands to their manager for
-#       same-day escalation.
+# Final step. Reads risk_flags.csv, filters to HIGH-risk rows only,
+# and saves them as high_risk_transactions.csv.
 #
-# NOTE:
-#   The broader executive summary (all accounts, all risk levels,
-#   plain-text report) is produced by src/summary.py.
-#   This file focuses solely on the HIGH-risk action list.
-# ============================================================
+# This gives whoever is reviewing the results a short, focused list
+# of the transactions that need attention right away — sorted by
+# the largest dollar variance first.
+#
+# The full account-level summary is handled by summary.py.
 
 import pandas as pd
 import os
