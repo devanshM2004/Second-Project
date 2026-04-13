@@ -1,0 +1,105 @@
+transaction_id,account_id,account_name,bank_date,sys_date,bank_amount,sys_amount,variance,transaction_type,description,status,is_duplicate,risk_score,risk_level,recommended_action
+TXN-0039,ACC-008,Crestview Auto Parts,2024-02-06,,20608.12,,20608.12,Deposit,Cash Deposit,BANK_ONLY,False,8,HIGH,Escalate immediately – large unrecorded bank debit/credit; investigate for fraud or processing failure
+TXN-0200,ACC-008,Crestview Auto Parts,,2024-01-16,,6092.83,-6092.83,Transfer,System Adjustment,SYSTEM_ONLY,False,7,HIGH,Escalate immediately – phantom system entry with no bank confirmation; possible fictitious transaction
+TXN-0049,ACC-002,Sandra Okafor,2024-01-18,,5990.87,,5990.87,Deposit,Check Deposit,BANK_ONLY,False,7,HIGH,Escalate immediately – large unrecorded bank debit/credit; investigate for fraud or processing failure
+TXN-0058,ACC-009,Elena Vasquez,2024-02-22,,-4182.75,,-4182.75,Withdrawal,Wire Out,BANK_ONLY,False,7,HIGH,Escalate immediately – large unrecorded bank debit/credit; investigate for fraud or processing failure
+TXN-0202,ACC-002,Sandra Okafor,,2024-03-05,,1113.86,-1113.86,Transfer,System Adjustment,SYSTEM_ONLY,False,7,HIGH,Escalate immediately – phantom system entry with no bank confirmation; possible fictitious transaction
+TXN-0203,ACC-007,Yuki Nakamura,,2024-03-03,,960.22,-960.22,Transfer,System Adjustment,SYSTEM_ONLY,False,6,HIGH,Escalate immediately – phantom system entry with no bank confirmation; possible fictitious transaction
+TXN-0003,ACC-009,Elena Vasquez,2024-02-23,,718.14,,718.14,Deposit,Wire In,BANK_ONLY,False,6,HIGH,Escalate immediately – large unrecorded bank debit/credit; investigate for fraud or processing failure
+TXN-0063,ACC-006,Pinewood Properties Inc.,2024-02-05,,-201.01,,-201.01,Withdrawal,ATM Withdrawal,BANK_ONLY,False,6,HIGH,Escalate immediately – large unrecorded bank debit/credit; investigate for fraud or processing failure
+TXN-0005,ACC-006,Pinewood Properties Inc.,2024-01-14,,-163.77,,-163.77,Fee,Monthly Service Fee,BANK_ONLY,False,6,HIGH,Escalate immediately – large unrecorded bank debit/credit; investigate for fraud or processing failure
+TXN-0037,ACC-004,Marcus Tran,2024-01-22,2024-01-22,47054.68,50723.46,-3668.78,Deposit,Cash Deposit,AMOUNT_MISMATCH,False,5,MEDIUM,Raise exception ticket – obtain source documents from both sides and post variance adjustment
+TXN-0201,ACC-004,Marcus Tran,,2024-02-14,,664.24,-664.24,Transfer,System Adjustment,SYSTEM_ONLY,False,5,MEDIUM,Raise exception ticket – contact bank to confirm whether transaction was received
+TXN-0073,ACC-006,Pinewood Properties Inc.,2024-02-29,2024-02-29,-6459.35,-6905.56,446.21,Fee,Overdraft Fee,AMOUNT_MISMATCH,False,5,MEDIUM,Raise exception ticket – obtain source documents from both sides and post variance adjustment
+TXN-0067,ACC-001,Greenfield Logistics LLC,2024-03-31,2024-03-31,-2710.52,-2566.19,-144.33,Fee,Overdraft Fee,AMOUNT_MISMATCH,False,4,MEDIUM,Raise exception ticket – obtain source documents from both sides and post variance adjustment
+TXN-0043,ACC-010,Northgate Capital Partners,2024-02-01,2024-02-01,-941.24,-806.41,-134.83,Withdrawal,ATM Withdrawal,AMOUNT_MISMATCH,False,3,MEDIUM,Raise exception ticket – obtain source documents from both sides and post variance adjustment
+TXN-0081,ACC-009,Elena Vasquez,2024-03-12,2024-03-12,802.6,734.44,68.16,Deposit,Check Deposit,AMOUNT_MISMATCH,False,4,MEDIUM,Raise exception ticket – obtain source documents from both sides and post variance adjustment
+TXN-0028,ACC-002,Sandra Okafor,2024-02-01,2024-02-01,521.88,455.42,66.46,Transfer,Internal Transfer,AMOUNT_MISMATCH,False,4,MEDIUM,Raise exception ticket – obtain source documents from both sides and post variance adjustment
+TXN-0022,ACC-009,Elena Vasquez,2024-03-18,2024-03-18,3685.7,3724.66,-38.96,Deposit,Wire In,AMOUNT_MISMATCH,False,4,MEDIUM,Raise exception ticket – obtain source documents from both sides and post variance adjustment
+TXN-0026,ACC-009,Elena Vasquez,2024-01-22,2024-01-22,-480.05,-503.57,23.52,Withdrawal,ACH Debit,AMOUNT_MISMATCH,False,4,MEDIUM,Raise exception ticket – obtain source documents from both sides and post variance adjustment
+TXN-0060,ACC-007,Yuki Nakamura,2024-03-26,2024-03-29,-3989.34,-3989.34,0.0,Withdrawal,Wire Out,DATE_MISMATCH,False,3,MEDIUM,Investigate posting cutoff – confirm correct value date and amend system record if needed
+TXN-0080,ACC-008,Crestview Auto Parts,2024-01-07,2024-01-03,-7262.51,-7262.51,0.0,Withdrawal,Wire Out,DATE_MISMATCH,False,3,MEDIUM,Investigate posting cutoff – confirm correct value date and amend system record if needed
+TXN-0095,ACC-007,Yuki Nakamura,2024-02-05,2024-02-01,-343.79,-343.79,0.0,Withdrawal,Check Paid,DATE_MISMATCH,False,3,MEDIUM,Investigate posting cutoff – confirm correct value date and amend system record if needed
+TXN-0046,ACC-002,Sandra Okafor,2024-01-02,2024-01-02,928.8,928.8,0.0,Transfer,Interbank Transfer,MATCHED,True,4,MEDIUM,Review duplicate flag – matched but flagged as duplicate; confirm no double-posting
+TXN-0054,ACC-007,Yuki Nakamura,2024-03-12,2024-03-12,-5964.57,-5964.57,0.0,Withdrawal,ATM Withdrawal,MATCHED,True,4,MEDIUM,Review duplicate flag – matched but flagged as duplicate; confirm no double-posting
+TXN-0071,ACC-007,Yuki Nakamura,2024-03-27,2024-03-27,-667.62,-667.62,0.0,Withdrawal,Wire Out,MATCHED,True,4,MEDIUM,Review duplicate flag – matched but flagged as duplicate; confirm no double-posting
+TXN-0084,ACC-009,Elena Vasquez,2024-03-03,2024-03-03,-3495.52,-3495.52,0.0,Withdrawal,Wire Out,MATCHED,True,4,MEDIUM,Review duplicate flag – matched but flagged as duplicate; confirm no double-posting
+TXN-0072,ACC-005,Silverline Medical Group,2024-02-06,2024-02-02,834.55,834.55,0.0,Transfer,Internal Transfer,DATE_MISMATCH,False,1,LOW,"Monitor – minor date shift, likely cutoff timing; confirm in next statement"
+TXN-0092,ACC-003,Blue Horizon Retail Co.,2024-03-20,2024-03-24,-8563.71,-8563.71,0.0,Fee,Wire Fee,DATE_MISMATCH,False,1,LOW,"Monitor – minor date shift, likely cutoff timing; confirm in next statement"
+TXN-0097,ACC-001,Greenfield Logistics LLC,2024-01-04,2023-12-31,-8030.32,-8030.32,0.0,Withdrawal,Wire Out,DATE_MISMATCH,False,2,LOW,"Monitor – minor date shift, likely cutoff timing; confirm in next statement"
+TXN-0001,ACC-004,Marcus Tran,2024-01-18,2024-01-18,282.0,282.0,0.0,Deposit,ACH Credit,MATCHED,False,1,LOW,No action required
+TXN-0002,ACC-002,Sandra Okafor,2024-01-28,2024-01-28,41.43,41.43,0.0,Deposit,Wire In,MATCHED,False,2,LOW,No action required
+TXN-0004,ACC-001,Greenfield Logistics LLC,2024-01-21,2024-01-21,-810.53,-810.53,0.0,Fee,Wire Fee,MATCHED,False,1,LOW,No action required
+TXN-0006,ACC-010,Northgate Capital Partners,2024-02-03,2024-02-03,-848.17,-848.17,0.0,Fee,Monthly Service Fee,MATCHED,False,0,LOW,No action required
+TXN-0007,ACC-007,Yuki Nakamura,2024-01-11,2024-01-11,-972.41,-972.41,0.0,Fee,Wire Fee,MATCHED,False,2,LOW,No action required
+TXN-0008,ACC-006,Pinewood Properties Inc.,2024-03-14,2024-03-14,6566.06,6566.06,0.0,Transfer,Internal Transfer,MATCHED,False,2,LOW,No action required
+TXN-0009,ACC-005,Silverline Medical Group,2024-01-11,2024-01-11,235.39,235.39,0.0,Deposit,Wire In,MATCHED,False,0,LOW,No action required
+TXN-0010,ACC-006,Pinewood Properties Inc.,2024-01-21,2024-01-21,458.42,458.42,0.0,Deposit,Check Deposit,MATCHED,False,2,LOW,No action required
+TXN-0011,ACC-002,Sandra Okafor,2024-03-18,2024-03-18,274.04,274.04,0.0,Transfer,Internal Transfer,MATCHED,False,2,LOW,No action required
+TXN-0012,ACC-009,Elena Vasquez,2024-01-29,2024-01-29,-385.28,-385.28,0.0,Withdrawal,ACH Debit,MATCHED,False,2,LOW,No action required
+TXN-0013,ACC-006,Pinewood Properties Inc.,2024-02-21,2024-02-21,41.75,41.75,0.0,Deposit,Check Deposit,MATCHED,False,2,LOW,No action required
+TXN-0014,ACC-006,Pinewood Properties Inc.,2024-01-28,2024-01-28,942.54,942.54,0.0,Deposit,Cash Deposit,MATCHED,False,2,LOW,No action required
+TXN-0015,ACC-003,Blue Horizon Retail Co.,2024-02-03,2024-02-03,-6785.02,-6785.02,0.0,Fee,Monthly Service Fee,MATCHED,False,0,LOW,No action required
+TXN-0016,ACC-010,Northgate Capital Partners,2024-02-24,2024-02-24,-5850.26,-5850.26,0.0,Withdrawal,Check Paid,MATCHED,False,0,LOW,No action required
+TXN-0017,ACC-009,Elena Vasquez,2024-03-04,2024-03-04,996.56,996.56,0.0,Transfer,Internal Transfer,MATCHED,False,2,LOW,No action required
+TXN-0018,ACC-003,Blue Horizon Retail Co.,2024-03-28,2024-03-28,2375.42,2375.42,0.0,Deposit,Cash Deposit,MATCHED,False,0,LOW,No action required
+TXN-0019,ACC-008,Crestview Auto Parts,2024-03-08,2024-03-08,599.33,599.33,0.0,Deposit,Check Deposit,MATCHED,False,2,LOW,No action required
+TXN-0020,ACC-009,Elena Vasquez,2024-02-04,2024-02-04,2030.85,2030.85,0.0,Deposit,Check Deposit,MATCHED,False,2,LOW,No action required
+TXN-0021,ACC-001,Greenfield Logistics LLC,2024-02-03,2024-02-03,166.42,166.42,0.0,Deposit,Wire In,MATCHED,False,1,LOW,No action required
+TXN-0023,ACC-009,Elena Vasquez,2024-01-01,2024-01-01,-169.77,-169.77,0.0,Withdrawal,ACH Debit,MATCHED,False,2,LOW,No action required
+TXN-0024,ACC-005,Silverline Medical Group,2024-01-31,2024-01-31,-928.88,-928.88,0.0,Fee,Monthly Service Fee,MATCHED,False,0,LOW,No action required
+TXN-0025,ACC-002,Sandra Okafor,2024-03-03,2024-03-03,-9521.6,-9521.6,0.0,Withdrawal,ATM Withdrawal,MATCHED,False,2,LOW,No action required
+TXN-0027,ACC-004,Marcus Tran,2024-02-09,2024-02-09,-47156.54,-47156.54,0.0,Fee,Overdraft Fee,MATCHED,False,1,LOW,No action required
+TXN-0029,ACC-004,Marcus Tran,2024-03-16,2024-03-16,591.84,591.84,0.0,Deposit,Wire In,MATCHED,False,1,LOW,No action required
+TXN-0030,ACC-004,Marcus Tran,2024-01-09,2024-01-09,634.16,634.16,0.0,Deposit,ACH Credit,MATCHED,False,1,LOW,No action required
+TXN-0031,ACC-008,Crestview Auto Parts,2024-01-28,2024-01-28,245.39,245.39,0.0,Transfer,Internal Transfer,MATCHED,False,2,LOW,No action required
+TXN-0032,ACC-007,Yuki Nakamura,2024-01-25,2024-01-25,-477.77,-477.77,0.0,Fee,Monthly Service Fee,MATCHED,False,2,LOW,No action required
+TXN-0033,ACC-007,Yuki Nakamura,2024-02-29,2024-02-29,4188.32,4188.32,0.0,Deposit,ACH Credit,MATCHED,False,2,LOW,No action required
+TXN-0034,ACC-002,Sandra Okafor,2024-02-01,2024-02-01,730.2,730.2,0.0,Deposit,Wire In,MATCHED,False,2,LOW,No action required
+TXN-0035,ACC-003,Blue Horizon Retail Co.,2024-02-05,2024-02-05,-148.64,-148.64,0.0,Withdrawal,Check Paid,MATCHED,False,0,LOW,No action required
+TXN-0036,ACC-009,Elena Vasquez,2024-01-13,2024-01-13,-1678.39,-1678.39,0.0,Withdrawal,ATM Withdrawal,MATCHED,False,2,LOW,No action required
+TXN-0038,ACC-001,Greenfield Logistics LLC,2024-01-22,2024-01-22,-865.14,-865.14,0.0,Fee,Overdraft Fee,MATCHED,False,1,LOW,No action required
+TXN-0040,ACC-001,Greenfield Logistics LLC,2024-03-15,2024-03-15,-303.44,-303.44,0.0,Fee,Wire Fee,MATCHED,False,1,LOW,No action required
+TXN-0041,ACC-010,Northgate Capital Partners,2024-03-02,2024-03-02,1514.43,1514.43,0.0,Deposit,Wire In,MATCHED,False,0,LOW,No action required
+TXN-0042,ACC-003,Blue Horizon Retail Co.,2024-01-09,2024-01-09,13204.46,13204.46,0.0,Deposit,ACH Credit,MATCHED,False,0,LOW,No action required
+TXN-0044,ACC-009,Elena Vasquez,2024-02-10,2024-02-10,587.25,587.25,0.0,Deposit,Check Deposit,MATCHED,False,2,LOW,No action required
+TXN-0045,ACC-005,Silverline Medical Group,2024-02-20,2024-02-20,-3827.34,-3827.34,0.0,Withdrawal,Wire Out,MATCHED,True,2,LOW,No action required
+TXN-0047,ACC-005,Silverline Medical Group,2024-01-17,2024-01-17,220.81,220.81,0.0,Deposit,Check Deposit,MATCHED,False,0,LOW,No action required
+TXN-0048,ACC-003,Blue Horizon Retail Co.,2024-02-26,2024-02-26,4325.37,4325.37,0.0,Deposit,Check Deposit,MATCHED,False,0,LOW,No action required
+TXN-0050,ACC-003,Blue Horizon Retail Co.,2024-02-04,2024-02-04,7681.01,7681.01,0.0,Deposit,Check Deposit,MATCHED,False,0,LOW,No action required
+TXN-0051,ACC-005,Silverline Medical Group,2024-03-05,2024-03-05,-2832.17,-2832.17,0.0,Withdrawal,Check Paid,MATCHED,False,0,LOW,No action required
+TXN-0052,ACC-002,Sandra Okafor,2024-03-22,2024-03-22,43844.15,43844.15,0.0,Transfer,Interbank Transfer,MATCHED,False,2,LOW,No action required
+TXN-0053,ACC-003,Blue Horizon Retail Co.,2024-03-22,2024-03-22,339.89,339.89,0.0,Transfer,Interbank Transfer,MATCHED,False,0,LOW,No action required
+TXN-0055,ACC-003,Blue Horizon Retail Co.,2024-03-10,2024-03-10,883.39,883.39,0.0,Deposit,ACH Credit,MATCHED,False,0,LOW,No action required
+TXN-0056,ACC-003,Blue Horizon Retail Co.,2024-01-06,2024-01-06,156.46,156.46,0.0,Transfer,Interbank Transfer,MATCHED,False,0,LOW,No action required
+TXN-0057,ACC-001,Greenfield Logistics LLC,2024-02-15,2024-02-15,8164.3,8164.3,0.0,Transfer,Internal Transfer,MATCHED,False,1,LOW,No action required
+TXN-0059,ACC-003,Blue Horizon Retail Co.,2024-02-22,2024-02-22,-9784.88,-9784.88,0.0,Withdrawal,ATM Withdrawal,MATCHED,False,0,LOW,No action required
+TXN-0061,ACC-007,Yuki Nakamura,2024-01-05,2024-01-05,703.56,703.56,0.0,Transfer,Interbank Transfer,MATCHED,False,2,LOW,No action required
+TXN-0062,ACC-006,Pinewood Properties Inc.,2024-02-09,2024-02-09,-918.35,-918.35,0.0,Withdrawal,Wire Out,MATCHED,False,2,LOW,No action required
+TXN-0064,ACC-009,Elena Vasquez,2024-02-12,2024-02-12,513.8,513.8,0.0,Transfer,Internal Transfer,MATCHED,False,2,LOW,No action required
+TXN-0065,ACC-010,Northgate Capital Partners,2024-02-03,2024-02-03,3350.68,3350.68,0.0,Deposit,ACH Credit,MATCHED,False,0,LOW,No action required
+TXN-0066,ACC-006,Pinewood Properties Inc.,2024-02-25,2024-02-25,351.88,351.88,0.0,Deposit,ACH Credit,MATCHED,False,2,LOW,No action required
+TXN-0068,ACC-004,Marcus Tran,2024-02-16,2024-02-16,807.64,807.64,0.0,Deposit,Cash Deposit,MATCHED,False,1,LOW,No action required
+TXN-0069,ACC-010,Northgate Capital Partners,2024-02-10,2024-02-10,46830.83,46830.83,0.0,Deposit,ACH Credit,MATCHED,False,0,LOW,No action required
+TXN-0070,ACC-006,Pinewood Properties Inc.,2024-02-21,2024-02-21,669.56,669.56,0.0,Transfer,Interbank Transfer,MATCHED,False,2,LOW,No action required
+TXN-0074,ACC-003,Blue Horizon Retail Co.,2024-03-25,2024-03-25,-5600.05,-5600.05,0.0,Fee,Monthly Service Fee,MATCHED,False,0,LOW,No action required
+TXN-0075,ACC-006,Pinewood Properties Inc.,2024-01-12,2024-01-12,635.98,635.98,0.0,Transfer,Internal Transfer,MATCHED,False,2,LOW,No action required
+TXN-0076,ACC-001,Greenfield Logistics LLC,2024-01-06,2024-01-06,206.94,206.94,0.0,Transfer,Internal Transfer,MATCHED,False,1,LOW,No action required
+TXN-0077,ACC-008,Crestview Auto Parts,2024-02-23,2024-02-23,-7915.64,-7915.64,0.0,Fee,Wire Fee,MATCHED,False,2,LOW,No action required
+TXN-0078,ACC-007,Yuki Nakamura,2024-02-01,2024-02-01,-4455.42,-4455.42,0.0,Withdrawal,Wire Out,MATCHED,False,2,LOW,No action required
+TXN-0079,ACC-002,Sandra Okafor,2024-02-24,2024-02-24,8743.1,8743.1,0.0,Deposit,Wire In,MATCHED,False,2,LOW,No action required
+TXN-0082,ACC-009,Elena Vasquez,2024-02-24,2024-02-24,-7472.75,-7472.75,0.0,Fee,Wire Fee,MATCHED,False,2,LOW,No action required
+TXN-0083,ACC-008,Crestview Auto Parts,2024-02-27,2024-02-27,-7692.16,-7692.16,0.0,Fee,Overdraft Fee,MATCHED,False,2,LOW,No action required
+TXN-0085,ACC-004,Marcus Tran,2024-02-04,2024-02-04,715.7,715.7,0.0,Transfer,Interbank Transfer,MATCHED,False,1,LOW,No action required
+TXN-0086,ACC-003,Blue Horizon Retail Co.,2024-01-30,2024-01-30,1725.12,1725.12,0.0,Transfer,Interbank Transfer,MATCHED,False,0,LOW,No action required
+TXN-0087,ACC-007,Yuki Nakamura,2024-02-12,2024-02-12,-1578.0,-1578.0,0.0,Withdrawal,Check Paid,MATCHED,False,2,LOW,No action required
+TXN-0088,ACC-007,Yuki Nakamura,2024-03-15,2024-03-15,-833.73,-833.73,0.0,Fee,Wire Fee,MATCHED,False,2,LOW,No action required
+TXN-0089,ACC-007,Yuki Nakamura,2024-03-02,2024-03-02,7889.59,7889.59,0.0,Deposit,ACH Credit,MATCHED,False,2,LOW,No action required
+TXN-0090,ACC-007,Yuki Nakamura,2024-03-09,2024-03-09,395.7,395.7,0.0,Transfer,Internal Transfer,MATCHED,False,2,LOW,No action required
+TXN-0091,ACC-001,Greenfield Logistics LLC,2024-02-19,2024-02-19,-441.04,-441.04,0.0,Fee,Overdraft Fee,MATCHED,False,1,LOW,No action required
+TXN-0093,ACC-001,Greenfield Logistics LLC,2024-01-11,2024-01-11,33675.71,33675.71,0.0,Deposit,Cash Deposit,MATCHED,False,1,LOW,No action required
+TXN-0094,ACC-005,Silverline Medical Group,2024-02-18,2024-02-18,-2635.38,-2635.38,0.0,Withdrawal,ACH Debit,MATCHED,False,0,LOW,No action required
+TXN-0096,ACC-009,Elena Vasquez,2024-01-07,2024-01-07,5232.29,5232.29,0.0,Transfer,Interbank Transfer,MATCHED,False,2,LOW,No action required
+TXN-0098,ACC-004,Marcus Tran,2024-01-17,2024-01-17,-6591.4,-6591.4,0.0,Withdrawal,Check Paid,MATCHED,False,1,LOW,No action required
+TXN-0099,ACC-005,Silverline Medical Group,2024-02-17,2024-02-17,225.57,225.57,0.0,Deposit,Wire In,MATCHED,False,0,LOW,No action required
+TXN-0100,ACC-005,Silverline Medical Group,2024-01-14,2024-01-14,2473.73,2473.73,0.0,Deposit,ACH Credit,MATCHED,False,0,LOW,No action required
