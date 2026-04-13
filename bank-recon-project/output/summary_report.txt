@@ -1,0 +1,75 @@
+==============================================================
+  BANK RECONCILIATION AND RISK DETECTION MODEL
+  Executive Summary Report
+==============================================================
+  Run date   : 2026-04-13
+  Data period: Q1 2024  (2024-01-01 to 2024-03-31)
+  Accounts   : 10
+  Prepared by: automated pipeline  (bank-recon-project)
+
+──────────────────────────────────────────────────────────────
+  1. TRANSACTION OVERVIEW
+──────────────────────────────────────────────────────────────
+  Total transactions reviewed :    104
+  Matched (no discrepancy)    :     80
+  Discrepancies identified    :     24  (23.1%)
+
+──────────────────────────────────────────────────────────────
+  2. RECONCILIATION STATUS BREAKDOWN
+──────────────────────────────────────────────────────────────
+  MATCHED                  80   ( 76.9%)
+  AMOUNT_MISMATCH           8   (  7.7%)
+  DATE_MISMATCH             6   (  5.8%)
+  BANK_ONLY                 6   (  5.8%)
+  SYSTEM_ONLY               4   (  3.8%)
+
+  Duplicate transaction IDs detected : 5
+
+──────────────────────────────────────────────────────────────
+  3. RISK LEVEL BREAKDOWN
+──────────────────────────────────────────────────────────────
+  HIGH        9  (  8.7%)   Immediate escalation required
+  MEDIUM     16  ( 15.4%)   Investigate this cycle
+  LOW        79  ( 76.0%)   Monitor / no urgent action
+
+──────────────────────────────────────────────────────────────
+  4. FINANCIAL EXPOSURE
+──────────────────────────────────────────────────────────────
+  Gross variance exposure (|sum|)  : $   45,287.06
+  Net variance (bank − system)     : $   10,555.90
+    of which — Bank-only exposure  : $   22,769.60
+             — System-only exposure: $   -8,831.15
+             — Amount mismatches   : $   -3,382.55
+
+──────────────────────────────────────────────────────────────
+  5. ACCOUNT SUMMARY
+──────────────────────────────────────────────────────────────
+  Account                           Txns  Disc  Disc%   Variance $ HighRisk
+  -------------------------------------------------------------------------
+  Crestview Auto Parts                 7     3  42.9%    26,700.95     HIGH
+  Sandra Okafor                       10     3  30.0%     7,171.19     HIGH
+  Elena Vasquez                       15     5  33.3%     5,031.53     HIGH
+  Yuki Nakamura                       14     3  21.4%       960.22     HIGH
+  Pinewood Properties Inc.            11     3  27.3%       810.99     HIGH
+  Marcus Tran                          9     2  22.2%     4,333.02   MEDIUM
+  Greenfield Logistics LLC            10     2  20.0%       144.33   MEDIUM
+  Northgate Capital Partners           6     1  16.7%       134.83   MEDIUM
+  Blue Horizon Retail Co.             13     1   7.7%         0.00      LOW
+  Silverline Medical Group             9     1  11.1%         0.00      LOW
+  -------------------------------------------------------------------------
+  TOTALS                             104    24  23.1%    45,287.06     HIGH
+
+──────────────────────────────────────────────────────────────
+  6. TOP 5 TRANSACTIONS BY VARIANCE
+──────────────────────────────────────────────────────────────
+  TXN ID       Account                      Status               Variance $   Risk
+  --------------------------------------------------------------------------------
+  TXN-0039     Crestview Auto Parts         BANK_ONLY             20,608.12   HIGH
+  TXN-0200     Crestview Auto Parts         SYSTEM_ONLY           -6,092.83   HIGH
+  TXN-0049     Sandra Okafor                BANK_ONLY              5,990.87   HIGH
+  TXN-0058     Elena Vasquez                BANK_ONLY             -4,182.75   HIGH
+  TXN-0037     Marcus Tran                  AMOUNT_MISMATCH       -3,668.78 MEDIUM
+
+==============================================================
+  END OF REPORT
+==============================================================

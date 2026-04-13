@@ -1,0 +1,10 @@
+transaction_id,account_id,account_name,bank_date,sys_date,bank_amount,sys_amount,variance,transaction_type,description,status,is_duplicate,risk_score,risk_level,recommended_action
+TXN-0039,ACC-008,Crestview Auto Parts,2024-02-06,,20608.12,,20608.12,Deposit,Cash Deposit,BANK_ONLY,False,8,HIGH,Escalate immediately – large unrecorded bank debit/credit; investigate for fraud or processing failure
+TXN-0200,ACC-008,Crestview Auto Parts,,2024-01-16,,6092.83,-6092.83,Transfer,System Adjustment,SYSTEM_ONLY,False,7,HIGH,Escalate immediately – phantom system entry with no bank confirmation; possible fictitious transaction
+TXN-0049,ACC-002,Sandra Okafor,2024-01-18,,5990.87,,5990.87,Deposit,Check Deposit,BANK_ONLY,False,7,HIGH,Escalate immediately – large unrecorded bank debit/credit; investigate for fraud or processing failure
+TXN-0058,ACC-009,Elena Vasquez,2024-02-22,,-4182.75,,-4182.75,Withdrawal,Wire Out,BANK_ONLY,False,7,HIGH,Escalate immediately – large unrecorded bank debit/credit; investigate for fraud or processing failure
+TXN-0202,ACC-002,Sandra Okafor,,2024-03-05,,1113.86,-1113.86,Transfer,System Adjustment,SYSTEM_ONLY,False,7,HIGH,Escalate immediately – phantom system entry with no bank confirmation; possible fictitious transaction
+TXN-0203,ACC-007,Yuki Nakamura,,2024-03-03,,960.22,-960.22,Transfer,System Adjustment,SYSTEM_ONLY,False,6,HIGH,Escalate immediately – phantom system entry with no bank confirmation; possible fictitious transaction
+TXN-0003,ACC-009,Elena Vasquez,2024-02-23,,718.14,,718.14,Deposit,Wire In,BANK_ONLY,False,6,HIGH,Escalate immediately – large unrecorded bank debit/credit; investigate for fraud or processing failure
+TXN-0063,ACC-006,Pinewood Properties Inc.,2024-02-05,,-201.01,,-201.01,Withdrawal,ATM Withdrawal,BANK_ONLY,False,6,HIGH,Escalate immediately – large unrecorded bank debit/credit; investigate for fraud or processing failure
+TXN-0005,ACC-006,Pinewood Properties Inc.,2024-01-14,,-163.77,,-163.77,Fee,Monthly Service Fee,BANK_ONLY,False,6,HIGH,Escalate immediately – large unrecorded bank debit/credit; investigate for fraud or processing failure
