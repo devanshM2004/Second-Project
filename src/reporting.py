@@ -39,21 +39,30 @@ def save_executive_summary(df: pd.DataFrame) -> None:
     """
     Write a condensed view for senior leadership.
 
-    Includes only Escalate and Watchlist items, with the columns
-    a non-technical audience actually cares about.
+    Includes only Escalate and Watchlist items. Sorted by residual risk
+    descending, then by regulatory_attention (High before Medium before Low)
+    so that items under active regulator scrutiny surface near the top of
+    each tier — even if their residual score is similar to peers.
     """
     cols = [
         "risk_id", "risk_name", "risk_category", "business_unit",
         "inherent_risk", "residual_risk", "risk_status",
-        "trend_direction", "priority_flag", "owner",
-        "mitigation_status", "next_review_date",
+        "regulatory_attention", "trend_direction", "priority_flag",
+        "owner", "mitigation_status", "next_review_date",
     ]
 
+    # Map regulatory_attention to a sort key so High sorts first
+    reg_order = {"High": 0, "Medium": 1, "Low": 2}
+
+    working = df[df["risk_status"].isin(["Escalate", "Watchlist"])].copy()
+    working["_reg_sort"] = working["regulatory_attention"].map(reg_order)
+
     summary = (
-        df[df["risk_status"].isin(["Escalate", "Watchlist"])][cols]
-        .sort_values("residual_risk", ascending=False)
+        working
+        .sort_values(["residual_risk", "_reg_sort"], ascending=[False, True])
+        .drop(columns=["_reg_sort"])
         .reset_index(drop=True)
-    )
+    )[cols]
 
     path = os.path.join(OUTPUT_DIR, "executive_summary.csv")
     summary.to_csv(path, index=False)

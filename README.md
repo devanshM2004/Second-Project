@@ -74,9 +74,9 @@ monitor. Each risk record contains 15 fields:
 | `description` | Plain-language explanation of the threat |
 | `likelihood_score` | How probable is the risk event? (1–5) |
 | `impact_score` | How severe would the damage be? (1–5) |
-| `velocity_score` | How fast could it escalate once triggered? (1–5) |
-| `control_effectiveness` | How well do existing controls reduce exposure? (0.0–1.0) |
-| `regulatory_attention` | Level of regulator focus: High / Medium / Low |
+| `velocity_score` | How fast could it escalate once triggered? (1–5) — used in inherent risk scoring |
+| `control_effectiveness` | How well do existing controls reduce exposure? (0.0–1.0) — used in residual risk scoring |
+| `regulatory_attention` | Level of regulator focus: High / Medium / Low — used to sort the executive summary |
 | `trend_direction` | Is the risk Increasing / Stable / Decreasing? |
 | `owner` | The senior executive accountable for this risk |
 | `mitigation_status` | Not Started / In Progress / Completed |
@@ -104,14 +104,27 @@ monitor. Each risk record contains 15 fields:
 ## How the Scoring Works
 
 ### Inherent Risk
-> `likelihood_score × impact_score`  — scale: 1 to 25
+> `(likelihood_score × impact_score) + velocity_score` — scale: 3 to 30
 
-The raw exposure before any controls are applied. A score of 20
-(likelihood=4, impact=5) means the event is likely and the consequences
-would be severe if nothing were done about it.
+The raw exposure before any controls are applied. Three fields contribute:
+
+- **Likelihood × Impact** captures severity — how probable the event is multiplied
+  by how damaging it would be (scale 1–25)
+- **Velocity** is added as an urgency premium — fast-moving threats leave
+  less time for controls to activate, so they score higher (adds 1–5)
+
+Why add rather than multiply? Multiplying by velocity would unfairly penalise
+slow-moving but existentially severe risks (climate change, Basel IV). Adding
+keeps slow-burn threats visible while still rewarding fast-mover urgency.
+
+**Example — Ransomware Attack** (likelihood=4, impact=5, velocity=5):
+- Inherent risk = (4 × 5) + 5 = **25**
+
+**Example — Basel IV** (likelihood=5, impact=4, velocity=2):
+- Inherent risk = (5 × 4) + 2 = **22** — still high despite slow velocity
 
 ### Residual Risk
-> `inherent_risk × (1 − control_effectiveness)` — scale: ~3 to 12
+> `inherent_risk × (1 − control_effectiveness)` — scale: ~3 to 14
 
 The exposure that remains **after** existing controls do their job.
 `control_effectiveness` acts as a discount factor:
@@ -119,31 +132,40 @@ The exposure that remains **after** existing controls do their job.
 - `0.60` → controls absorb 60% of the risk; 40% remains
 - `0.30` → weak controls; 70% of raw exposure is still live
 
-**Example — Ransomware Attack:**
-- Inherent risk = 4 × 5 = **20**
-- Control effectiveness = 0.55
-- Residual risk = 20 × (1 − 0.55) = **9.0 → Escalate**
+**Continuing the Ransomware example:**
+- Inherent risk = 25, control effectiveness = 0.55
+- Residual risk = 25 × (1 − 0.55) = **11.25 → Escalate**
 
 ### Risk Status
-Residual risk is translated into a triage label for governance routing:
+Residual risk is translated into a triage label for governance routing.
+Thresholds are calibrated to the residual range produced by this portfolio
+(approximately 3–14):
 
 | Status | Residual Score | Action Required |
 |---|---|---|
-| **Escalate** | ≥ 9.0 | Immediate senior leadership attention; mitigation plan required |
-| **Watchlist** | ≥ 6.0 | Review monthly; escalation criteria defined |
-| **Monitor** | < 6.0 | Standard quarterly review; no immediate action needed |
+| **Escalate** | ≥ 11 | Immediate senior leadership attention; mitigation plan required |
+| **Watchlist** | ≥ 7 | Review monthly; escalation criteria defined |
+| **Monitor** | < 7 | Standard quarterly review; no immediate action needed |
 
 ### Priority Flag
 A `True/False` flag that marks the highest-urgency items — those where
 residual exposure is already in the Escalate tier **and** the trend is
 actively getting worse:
 
-- `residual_risk ≥ 9.0` (Escalate tier), **AND**
+- `residual_risk ≥ 11` (Escalate tier), **AND**
 - `trend_direction == "Increasing"`
 
 Priority-flagged risks are what a Chief Risk Officer puts at the top of a
 board pack. They represent the intersection of two bad signals: the exposure
 is high despite controls, and the trajectory is heading in the wrong direction.
+
+### Regulatory Attention in Outputs
+`regulatory_attention` (High / Medium / Low) does not affect the numeric
+score — it reflects external pressure from regulators rather than the
+intrinsic severity of the risk. It is used in the **executive summary**
+as a secondary sort: within each residual-risk tier, High-attention items
+surface first. A Watchlist risk under active CFPB or FCA scrutiny warrants
+different urgency than one flying under the radar.
 
 ---
 
@@ -154,7 +176,10 @@ The complete 30-row register with every field and all four derived scores.
 This is the master document the risk team maintains and updates regularly.
 
 ### `output/executive_summary.csv`
-Filtered to **Escalate and Watchlist items only**, sorted by residual risk.
+Filtered to **Escalate and Watchlist items only**. Sorted by residual risk
+descending, then by regulatory attention (High → Medium → Low) within each
+tier. Includes the `regulatory_attention` column so the committee can
+immediately see which items are also under active regulator scrutiny.
 This is what gets presented at a Risk Committee or board meeting —
 leadership needs to see the items requiring attention, not the full register.
 
@@ -188,7 +213,7 @@ This project mirrors the actual workflow of an emerging risk team:
 | Step | Real-World Activity | In This Project |
 |---|---|---|
 | **Identify** | Horizon scanning, regulatory bulletins, internal nominations | 30 synthetic risks across 11 categories |
-| **Score** | Risk committee scores likelihood, impact, velocity, controls | `scoring.py` — inherent and residual model |
+| **Score** | Risk committee scores likelihood, impact, velocity, controls | `scoring.py` — inherent risk = (L × I) + V; residual = inherent × (1 − CE) |
 | **Triage** | Classify risks into governance action tiers | `risk_status` — Escalate / Watchlist / Monitor |
 | **Prioritise** | Flag worsening high-exposure items for urgent action | `priority_flag` column |
 | **Report** | Board packs, committee updates, category roll-ups | Executive summary, top-5, category counts |
@@ -211,10 +236,13 @@ This project mirrors the actual workflow of an emerging risk team:
 > under a minute."
 
 **On velocity:**
-> "Velocity separates emerging risk thinking from traditional risk
-> management. A slow-moving regulatory change and a sudden cyberattack
-> can carry the same inherent score, but they require completely different
-> response timelines. Velocity captures that."
+> "Velocity is built into the inherent risk score — fast-moving threats get
+> a higher score because they leave less time for controls to activate.
+> A ransomware attack with velocity 5 scores (4×5)+5=25 inherent; the same
+> likelihood and impact with velocity 2 scores only 22. It's a deliberate
+> design choice: slow-burn risks like climate change or Basel IV aren't
+> penalised because you multiply by velocity, but fast-movers get
+> appropriate urgency credit."
 
 **On the priority flag:**
 > "The flag catches the intersection of two bad signals: residual exposure

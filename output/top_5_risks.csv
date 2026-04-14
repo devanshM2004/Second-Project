@@ -1,6 +1,6 @@
 ,risk_id,risk_name,risk_category,inherent_risk,residual_risk,risk_status,trend_direction,priority_flag,owner
-1,ER-010,US–China Trade War Escalation,Geopolitical,16,11.2,Escalate,Increasing,True,Head of Country Risk
-2,ER-028,Generative AI Adoption without Governance Framework,Strategic Risk,16,11.2,Escalate,Increasing,True,Chief Risk Officer
-3,ER-007,Physical Climate Risk in Mortgage Portfolio,Climate / ESG,15,9.75,Escalate,Increasing,True,Head of Credit Risk
-4,ER-001,Ransomware Attack on Core Banking Systems,Cybersecurity,20,9.0,Escalate,Increasing,True,Chief Information Security Officer
-5,ER-016,Commercial Real Estate Valuation Collapse,Market Risk,16,8.8,Watchlist,Increasing,False,Head of Credit Risk
+1,ER-028,Generative AI Adoption without Governance Framework,Strategic Risk,20,14.0,Escalate,Increasing,True,Chief Risk Officer
+2,ER-010,US–China Trade War Escalation,Geopolitical,19,13.3,Escalate,Increasing,True,Head of Country Risk
+3,ER-001,Ransomware Attack on Core Banking Systems,Cybersecurity,25,11.25,Escalate,Increasing,True,Chief Information Security Officer
+4,ER-007,Physical Climate Risk in Mortgage Portfolio,Climate / ESG,17,11.05,Escalate,Increasing,True,Head of Credit Risk
+5,ER-019,Critical Cloud Provider Outage,Operational Risk,20,10.0,Watchlist,Stable,False,Chief Technology Officer

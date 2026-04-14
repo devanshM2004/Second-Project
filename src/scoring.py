@@ -15,10 +15,11 @@ def apply_scores(df: pd.DataFrame) -> pd.DataFrame:
     """
     Add four derived columns to the risk register:
 
-        inherent_risk      -- raw exposure before controls
-        residual_risk      -- exposure after controls are applied
-        risk_status        -- Monitor / Watchlist / Escalate
-        priority_flag      -- True if high residual AND trend is worsening
+        inherent_risk  -- raw exposure before controls (uses likelihood,
+                          impact, and velocity)
+        residual_risk  -- exposure after controls are applied
+        risk_status    -- Monitor / Watchlist / Escalate
+        priority_flag  -- True if high residual AND trend is worsening
 
     Parameters
     ----------
@@ -33,14 +34,26 @@ def apply_scores(df: pd.DataFrame) -> pd.DataFrame:
 
     # ── 1. Inherent Risk ───────────────────────────────────────────────────
     # How severe is this risk BEFORE we do anything about it?
-    # Scale: 1 (low) to 25 (critical)
     #
-    # Formula: Likelihood × Impact
-    #   - Likelihood: how probable is the risk event?   (1–5)
-    #   - Impact:     how bad would the damage be?      (1–5)
+    # Formula: (Likelihood × Impact) + Velocity
+    #   - Likelihood × Impact captures severity: how probable × how damaging
+    #     Scale: 1–25
+    #   - Velocity is added on top as an urgency premium: fast-moving threats
+    #     leave less time for controls to work, so they score higher
+    #     Scale: adds 1–5 on top of the product
+    #   - Combined inherent scale: 3–30
     #
-    # A score of 25 means both are at maximum — the worst possible exposure.
-    df["inherent_risk"] = df["likelihood_score"] * df["impact_score"]
+    # Why not multiply by velocity?
+    #   Multiplying would unfairly penalise slow-moving but severe risks
+    #   (e.g. climate risk, Basel IV) — a deliberate design choice to
+    #   keep slow-burn existential threats visible in the register.
+    #
+    # Interview example — Ransomware Attack:
+    #   likelihood=4, impact=5, velocity=5
+    #   → inherent = (4 × 5) + 5 = 25
+    df["inherent_risk"] = (
+        df["likelihood_score"] * df["impact_score"] + df["velocity_score"]
+    )
 
     # ── 2. Residual Risk ───────────────────────────────────────────────────
     # How much risk REMAINS after existing controls do their job?
@@ -51,8 +64,9 @@ def apply_scores(df: pd.DataFrame) -> pd.DataFrame:
     #   - 1.00 = controls fully eliminate the risk (rarely realistic)
     #   - 0.60 = controls reduce exposure by 60%, leaving 40% remaining
     #
-    # Example: inherent_risk=20, control_effectiveness=0.60
-    #   → residual_risk = 20 × (1 − 0.60) = 20 × 0.40 = 8.0  (Watchlist)
+    # Example — Ransomware Attack:
+    #   inherent_risk=25, control_effectiveness=0.55
+    #   → residual = 25 × (1 − 0.55) = 25 × 0.45 = 11.25  (Escalate)
     df["residual_risk"] = (
         df["inherent_risk"] * (1 - df["control_effectiveness"])
     ).round(2)
@@ -60,18 +74,17 @@ def apply_scores(df: pd.DataFrame) -> pd.DataFrame:
     # ── 3. Risk Status ─────────────────────────────────────────────────────
     # Translate the residual score into an actionable triage label.
     #
-    # Why these thresholds?
-    # Inherent risk tops out at 25 (5×5). Control effectiveness in this
-    # portfolio averages 45–65%, so residual scores cluster in the 3–12
-    # range rather than 1–25. Thresholds are calibrated to that range:
+    # Thresholds are calibrated to the residual risk range in this portfolio.
+    # With inherent scores ranging 5–25 and control effectiveness 25–70%,
+    # residual scores cluster between 3 and 14:
     #
-    #   Escalate  (≥  9): Senior leadership must act now.
-    #   Watchlist (≥  6): Elevated — review monthly, ready to escalate.
-    #   Monitor   (<  6): Acceptable level — standard quarterly cycle.
+    #   Escalate  (≥ 11): Immediate senior leadership attention required.
+    #   Watchlist (≥  7): Elevated — review monthly, escalation criteria set.
+    #   Monitor   (<  7): Acceptable — standard quarterly review cycle.
     def assign_status(residual: float) -> str:
-        if residual >= 9:
+        if residual >= 11:
             return "Escalate"
-        elif residual >= 6:
+        elif residual >= 7:
             return "Watchlist"
         else:
             return "Monitor"
@@ -79,14 +92,19 @@ def apply_scores(df: pd.DataFrame) -> pd.DataFrame:
     df["risk_status"] = df["residual_risk"].apply(assign_status)
 
     # ── 4. Priority Flag ───────────────────────────────────────────────────
-    # Highlight risks that are BOTH high in residual score AND getting worse.
+    # Mark risks that are BOTH at the Escalate tier AND actively worsening.
     # These are the items most likely to surprise leadership if left alone.
     #
     # Criteria:
-    #   - residual_risk ≥ 9    (Escalate tier)
+    #   - residual_risk ≥ 11   (Escalate tier)
     #   - trend_direction == "Increasing"  (trajectory is worsening)
+    #
+    # A priority-flagged risk has two bad signals at once: the residual
+    # exposure is already high despite controls, and the trend is moving
+    # in the wrong direction. This is what a CRO puts at the top of a board
+    # pack.
     df["priority_flag"] = (
-        (df["residual_risk"] >= 9) & (df["trend_direction"] == "Increasing")
+        (df["residual_risk"] >= 11) & (df["trend_direction"] == "Increasing")
     )
 
     return df
