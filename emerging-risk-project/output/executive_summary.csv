@@ -1,0 +1,22 @@
+risk_id,risk_name,risk_category,business_unit,inherent_risk,residual_risk,risk_status,trend_direction,priority_flag,owner,mitigation_status,next_review_date
+ER-010,US–China Trade War Escalation,Geopolitical,Investment Banking,16,11.2,Escalate,Increasing,True,Head of Country Risk,In Progress,2026-05-01
+ER-028,Generative AI Adoption without Governance Framework,Strategic Risk,Corporate Strategy,16,11.2,Escalate,Increasing,True,Chief Risk Officer,In Progress,2026-05-20
+ER-007,Physical Climate Risk in Mortgage Portfolio,Climate / ESG,Retail Banking,15,9.75,Escalate,Increasing,True,Head of Credit Risk,Not Started,2026-03-30
+ER-001,Ransomware Attack on Core Banking Systems,Cybersecurity,IT / Technology,20,9.0,Escalate,Increasing,True,Chief Information Security Officer,In Progress,2026-03-15
+ER-014,Core System Modernisation Programme Overrun,Technology / AI,IT / Technology,16,8.8,Watchlist,Stable,False,Chief Technology Officer,In Progress,2026-02-20
+ER-016,Commercial Real Estate Valuation Collapse,Market Risk,Investment Banking,16,8.8,Watchlist,Increasing,False,Head of Credit Risk,In Progress,2026-05-05
+ER-027,Fintech Disintermediation of Retail Deposits,Strategic Risk,Corporate Strategy,12,7.8,Watchlist,Increasing,False,Chief Strategy Officer,In Progress,2026-05-15
+ER-019,Critical Cloud Provider Outage,Operational Risk,IT / Technology,15,7.5,Watchlist,Stable,False,Chief Technology Officer,In Progress,2026-04-08
+ER-005,Digital Asset Regulatory Uncertainty,Regulatory / Compliance,Compliance,12,7.2,Watchlist,Increasing,False,Chief Compliance Officer,In Progress,2026-04-05
+ER-020,Talent Attrition in Risk and Compliance Functions,Operational Risk,Human Resources,12,7.2,Watchlist,Increasing,False,Chief Human Resources Officer,In Progress,2026-02-05
+ER-008,Transition Risk from Carbon Pricing Legislation,Climate / ESG,Investment Banking,12,7.2,Watchlist,Increasing,False,Chief Sustainability Officer,In Progress,2026-06-01
+ER-004,Basel IV Capital Requirements Implementation,Regulatory / Compliance,Risk Management,20,7.0,Watchlist,Stable,False,Chief Risk Officer,In Progress,2026-04-20
+ER-012,Middle East Conflict Spillover on Energy Markets,Geopolitical,Treasury,9,6.75,Watchlist,Stable,False,Head of Market Risk,Not Started,2026-03-10
+ER-003,AI-Powered Phishing and Social Engineering,Cybersecurity,Retail Banking,12,6.6,Watchlist,Increasing,False,Chief Information Security Officer,In Progress,2026-04-10
+ER-002,Third-Party API Breach via Vendor Integration,Cybersecurity,Operations,12,6.0,Watchlist,Increasing,False,Head of Third-Party Risk,In Progress,2026-02-01
+ER-013,Algorithmic Model Bias in Credit Decisioning,Technology / AI,Retail Banking,12,6.0,Watchlist,Increasing,False,Chief Data Officer,In Progress,2026-04-15
+ER-011,Sanctions Evasion and Correspondent Banking Risk,Geopolitical,Compliance,15,6.0,Watchlist,Stable,False,Chief Compliance Officer,In Progress,2026-01-10
+ER-023,Leveraged Loan Portfolio Stress,Credit Risk,Investment Banking,12,6.0,Watchlist,Stable,False,Head of Credit Risk,In Progress,2026-03-05
+ER-021,Payment Processing Fraud via Synthetic Identities,Operational Risk,Retail Banking,12,6.0,Watchlist,Increasing,False,Head of Fraud Risk,In Progress,2026-05-10
+ER-026,Data Localisation Laws Impacting Cloud Strategy,Third-Party / Vendor,IT / Technology,12,6.0,Watchlist,Increasing,False,Chief Technology Officer,In Progress,2026-04-12
+ER-025,Critical Vendor Insolvency (Payment Rail Provider),Third-Party / Vendor,Operations,10,6.0,Watchlist,Stable,False,Head of Third-Party Risk,Not Started,2026-03-15
