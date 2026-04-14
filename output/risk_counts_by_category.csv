@@ -1,0 +1,12 @@
+risk_category,total_risks,escalate,watchlist,monitor,avg_residual_risk,priority_items
+Strategic Risk,2,1,1,0,11.88,1
+Geopolitical,3,1,2,0,10.22,1
+Cybersecurity,3,1,2,0,9.35,1
+Operational Risk,3,0,3,0,8.8,0
+Climate / ESG,3,1,1,1,8.28,1
+Third-Party / Vendor,2,0,2,0,7.7,0
+Regulatory / Compliance,3,0,2,1,7.43,0
+Market Risk,3,0,1,2,7.05,0
+Technology / AI,3,0,2,1,7.0,0
+Credit Risk,3,0,1,2,6.8,0
+Conduct / Legal,2,0,0,2,5.55,0
