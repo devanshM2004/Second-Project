@@ -33,7 +33,7 @@ visualisations that land in front of senior leadership.
 ├── requirements.txt        ← Python dependencies
 ├── main.py                 ← runs the full pipeline
 ├── data/
-│   └── risk_register_raw.csv    ← synthetic scored register (written on run)
+│   └── risk_register_raw.csv    ← unscored input dataset (refreshed on run)
 ├── output/
 │   ├── risk_register.csv        ← full 30-row scored register
 │   ├── executive_summary.csv    ← Escalate + Watchlist items for leadership
@@ -74,14 +74,16 @@ monitor. Each risk record contains 15 fields:
 | `description` | Plain-language explanation of the threat |
 | `likelihood_score` | How probable is the risk event? (1–5) |
 | `impact_score` | How severe would the damage be? (1–5) |
-| `velocity_score` | How fast could it escalate once triggered? (1–5) — used in inherent risk scoring |
-| `control_effectiveness` | How well do existing controls reduce exposure? (0.0–1.0) — used in residual risk scoring |
-| `regulatory_attention` | Level of regulator focus: High / Medium / Low — used to sort the executive summary |
+| `velocity_score` | How fast could it escalate once triggered? (1–5) |
+| `control_effectiveness` | How well do existing controls reduce exposure? (0.0–1.0) |
+| `regulatory_attention` | Level of regulator focus: High / Medium / Low |
 | `trend_direction` | Is the risk Increasing / Stable / Decreasing? |
 | `owner` | The senior executive accountable for this risk |
 | `mitigation_status` | Not Started / In Progress / Completed |
 | `last_review_date` | Date of most recent formal review |
 | `next_review_date` | Scheduled next review date |
+
+`likelihood_score`, `impact_score`, and `velocity_score` feed the inherent risk formula. `control_effectiveness` determines residual risk. `regulatory_attention` sorts the executive summary. `trend_direction` drives the priority flag.
 
 **Risk categories covered:**
 

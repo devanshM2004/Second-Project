@@ -135,7 +135,6 @@ def save_heatmap(df: pd.DataFrame) -> None:
     The top-right quadrant (high likelihood, high impact) is where
     Escalate items cluster — exactly what you'd explain to a committee.
     """
-    _ensure_output_dir()
 
     status_colors = {
         "Monitor":   "#2ca02c",   # green

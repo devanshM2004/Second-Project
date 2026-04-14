@@ -635,7 +635,7 @@ def build_risk_register() -> pd.DataFrame:
 
     df = pd.DataFrame(risks)
 
-    # Ensure date columns are proper Python date objects
+    # Convert to pandas Timestamp for consistent date formatting in outputs
     df["last_review_date"] = pd.to_datetime(df["last_review_date"])
     df["next_review_date"] = pd.to_datetime(df["next_review_date"])
 
