@@ -1,50 +1,60 @@
 # Emerging Risk Identification and Monitoring Framework
 
-> A Python portfolio project simulating the strategy and emerging risk
-> function at a large financial institution.
+> A Python project that simulates how a bank's strategy and emerging-risk
+> team identifies, scores, triages, and reports on new threats — end to end.
+
+---
+
+## Project Snapshot
+
+| | |
+|---|---|
+| **What it is** | A working emerging-risk pipeline: build a risk register → score it → triage it → produce board-ready reports and a heat map. |
+| **Domain** | Strategy & emerging risk at a large financial institution (banking / insurance / asset management). |
+| **Dataset** | 30 synthetic emerging risks across 11 categories, 15 fields each — hard-coded and stable, so every number is explainable. |
+| **Stack** | Python · pandas · matplotlib · numpy. No database, no framework — runs with one command. |
+| **Run it** | `pip install -r requirements.txt && python main.py` |
+| **Output** | 4 CSV reports + 1 heat map chart, written to `output/`. |
+
+---
+
+## Key Outputs
+
+| File | What it is | Who reads it |
+|---|---|---|
+| `output/risk_register.csv` | Full 30-row register with all four derived scores | Risk team (master record) |
+| `output/executive_summary.csv` | Escalate + Watchlist items, sorted for attention | Risk Committee / board |
+| `output/top_5_risks.csv` | The five highest residual-risk items | Senior leadership |
+| `output/risk_counts_by_category.csv` | Status and average score rolled up by category | Risk team / CRO |
+| `output/risk_heatmap.png` | Likelihood × Impact heat map | Committee presentations |
+
+---
+
+## Dashboard Preview
+
+The headline deliverable is a Likelihood × Impact heat map — the standard
+one-glance view used in risk committees. Colour shows triage status, and a
+star marks priority-flagged items. The top-right quadrant is the danger zone.
+
+![Risk Heat Map](output/risk_heatmap.png)
 
 ---
 
 ## What Is Emerging Risk?
 
 Emerging risks are threats that are new, fast-moving, or not yet fully
-captured by traditional risk management frameworks. Unlike well-understood
-risks such as credit default or interest rate movements — which banks have
-managed for decades — emerging risks require a different discipline: one
-built around early identification, systematic scoring, and continuous
-monitoring rather than purely quantitative modelling.
+captured by traditional risk frameworks. Unlike well-understood risks such as
+credit default or interest-rate moves — which banks have managed for decades —
+they call for a different discipline: early identification, systematic scoring,
+and continuous monitoring rather than purely quantitative modelling.
 
-Every major bank, insurer, and asset manager maintains a team responsible
-for this work. Their job is to look around corners: to spot a geopolitical
-shift, a technology threat, or a regulatory change before it becomes a
-crisis, and to ensure the right people are paying attention in time to act.
+Every major bank, insurer, and asset manager has a team that does this work.
+Their job is to look around corners — to spot a geopolitical shift, a
+technology threat, or a regulatory change before it becomes a crisis — and to
+make sure the right people are paying attention in time to act.
 
-This project replicates that workflow end-to-end — from building a risk
-register, to scoring and triaging risks, to producing the reports and
-visualisations that land in front of senior leadership.
-
----
-
-## Project Structure
-
-```
-/
-├── README.md               ← you are here
-├── requirements.txt        ← Python dependencies
-├── main.py                 ← runs the full pipeline
-├── data/
-│   └── risk_register_raw.csv    ← unscored input dataset (refreshed on run)
-├── output/
-│   ├── risk_register.csv        ← full 30-row scored register
-│   ├── executive_summary.csv    ← Escalate + Watchlist items for leadership
-│   ├── top_5_risks.csv          ← five highest residual-risk items
-│   ├── risk_counts_by_category.csv  ← aggregated view by risk category
-│   └── risk_heatmap.png         ← likelihood × impact heat map chart
-└── src/
-    ├── data_generator.py   ← builds the synthetic risk register (30 risks)
-    ├── scoring.py          ← inherent risk, residual risk, status, priority flag
-    └── reporting.py        ← generates all CSVs and the heat map
-```
+This project replicates that workflow: build a risk register, score and triage
+it, and produce the reports and visuals that land in front of senior leadership.
 
 ---
 
@@ -59,33 +69,83 @@ All output files are written to `output/`.
 
 ---
 
+## How the Scoring Works
+
+The logic is deliberately simple and transparent — easy to explain to a
+non-technical stakeholder, and easy to defend in an interview.
+
+### Inherent Risk — raw exposure before controls
+> `(likelihood × impact) + velocity` — scale 3 to 30
+
+- **Likelihood × Impact** captures severity: how probable × how damaging (1–25).
+- **Velocity** is added as an urgency premium — fast-moving threats leave less
+  time for controls to activate, so they score higher (adds 1–5).
+
+Why *add* velocity instead of multiplying? Multiplying would unfairly punish
+slow-moving but severe risks (climate, Basel IV). Adding keeps slow-burn
+threats visible while still rewarding fast-mover urgency.
+
+> **Ransomware** (L=4, I=5, V=5) → (4×5)+5 = **25**
+> **Basel IV** (L=5, I=4, V=2) → (5×4)+2 = **22** — still high despite slow velocity
+
+### Residual Risk — what remains after controls
+> `inherent_risk × (1 − control_effectiveness)`
+
+`control_effectiveness` is a discount factor between 0 and 1: `0.60` means
+controls absorb 60% of the exposure, leaving 40% live.
+
+> **Ransomware**: 25 × (1 − 0.55) = **11.25 → Escalate**
+
+### Risk Status — the triage label
+Thresholds are calibrated to this portfolio's residual range (~3–14).
+
+| Status | Residual | Action |
+|---|---|---|
+| **Escalate** | ≥ 11 | Immediate senior-leadership attention; mitigation plan required |
+| **Watchlist** | ≥ 7 | Review monthly; escalation criteria defined |
+| **Monitor** | < 7 | Standard quarterly review |
+
+### Priority Flag — the "act now" marker
+Flags items that are **both** high-exposure **and** getting worse:
+
+- `residual_risk ≥ 11` (Escalate tier), **and**
+- `trend_direction == "Increasing"`
+
+These are the two-bad-signals items a Chief Risk Officer puts at the top of a
+board pack: high despite controls, and trending the wrong way.
+
+### Regulatory Attention — a sort, not a score
+`regulatory_attention` (High / Medium / Low) reflects external regulator
+pressure, not intrinsic severity, so it doesn't change the numeric score.
+It's used as a **secondary sort** in the executive summary: within each tier,
+items under active scrutiny surface first.
+
+---
+
 ## The Data
 
-The project uses a synthetic dataset of **30 emerging risks** designed to
-reflect what a large financial institution's strategy team would actually
-monitor. Each risk record contains 15 fields:
+A synthetic dataset of **30 emerging risks**, each with 15 fields, built to
+reflect what a large bank's strategy team would actually monitor.
 
 | Field | Description |
 |---|---|
 | `risk_id` | Unique identifier (ER-001 to ER-030) |
 | `risk_name` | Short name for the risk |
-| `risk_category` | One of 11 categories (see below) |
+| `risk_category` | One of 11 categories (below) |
 | `business_unit` | The part of the firm most exposed |
 | `description` | Plain-language explanation of the threat |
-| `likelihood_score` | How probable is the risk event? (1–5) |
+| `likelihood_score` | How probable is the event? (1–5) |
 | `impact_score` | How severe would the damage be? (1–5) |
 | `velocity_score` | How fast could it escalate once triggered? (1–5) |
-| `control_effectiveness` | How well do existing controls reduce exposure? (0.0–1.0) |
-| `regulatory_attention` | Level of regulator focus: High / Medium / Low |
-| `trend_direction` | Is the risk Increasing / Stable / Decreasing? |
-| `owner` | The senior executive accountable for this risk |
+| `control_effectiveness` | How well existing controls reduce exposure (0.0–1.0) |
+| `regulatory_attention` | Regulator focus: High / Medium / Low |
+| `trend_direction` | Increasing / Stable / Decreasing |
+| `owner` | The senior executive accountable |
 | `mitigation_status` | Not Started / In Progress / Completed |
 | `last_review_date` | Date of most recent formal review |
-| `next_review_date` | Scheduled next review date |
+| `next_review_date` | Scheduled next review |
 
-`likelihood_score`, `impact_score`, and `velocity_score` feed the inherent risk formula. `control_effectiveness` determines residual risk. `regulatory_attention` sorts the executive summary. `trend_direction` drives the priority flag.
-
-**Risk categories covered:**
+**Categories covered:**
 
 | Category | Example Risk |
 |---|---|
@@ -103,150 +163,84 @@ monitor. Each risk record contains 15 fields:
 
 ---
 
-## How the Scoring Works
-
-### Inherent Risk
-> `(likelihood_score × impact_score) + velocity_score` — scale: 3 to 30
-
-The raw exposure before any controls are applied. Three fields contribute:
-
-- **Likelihood × Impact** captures severity — how probable the event is multiplied
-  by how damaging it would be (scale 1–25)
-- **Velocity** is added as an urgency premium — fast-moving threats leave
-  less time for controls to activate, so they score higher (adds 1–5)
-
-Why add rather than multiply? Multiplying by velocity would unfairly penalise
-slow-moving but existentially severe risks (climate change, Basel IV). Adding
-keeps slow-burn threats visible while still rewarding fast-mover urgency.
-
-**Example — Ransomware Attack** (likelihood=4, impact=5, velocity=5):
-- Inherent risk = (4 × 5) + 5 = **25**
-
-**Example — Basel IV** (likelihood=5, impact=4, velocity=2):
-- Inherent risk = (5 × 4) + 2 = **22** — still high despite slow velocity
-
-### Residual Risk
-> `inherent_risk × (1 − control_effectiveness)` — scale: ~3 to 14
-
-The exposure that remains **after** existing controls do their job.
-`control_effectiveness` acts as a discount factor:
-
-- `0.60` → controls absorb 60% of the risk; 40% remains
-- `0.30` → weak controls; 70% of raw exposure is still live
-
-**Continuing the Ransomware example:**
-- Inherent risk = 25, control effectiveness = 0.55
-- Residual risk = 25 × (1 − 0.55) = **11.25 → Escalate**
-
-### Risk Status
-Residual risk is translated into a triage label for governance routing.
-Thresholds are calibrated to the residual range produced by this portfolio
-(approximately 3–14):
-
-| Status | Residual Score | Action Required |
-|---|---|---|
-| **Escalate** | ≥ 11 | Immediate senior leadership attention; mitigation plan required |
-| **Watchlist** | ≥ 7 | Review monthly; escalation criteria defined |
-| **Monitor** | < 7 | Standard quarterly review; no immediate action needed |
-
-### Priority Flag
-A `True/False` flag that marks the highest-urgency items — those where
-residual exposure is already in the Escalate tier **and** the trend is
-actively getting worse:
-
-- `residual_risk ≥ 11` (Escalate tier), **AND**
-- `trend_direction == "Increasing"`
-
-Priority-flagged risks are what a Chief Risk Officer puts at the top of a
-board pack. They represent the intersection of two bad signals: the exposure
-is high despite controls, and the trajectory is heading in the wrong direction.
-
-### Regulatory Attention in Outputs
-`regulatory_attention` (High / Medium / Low) does not affect the numeric
-score — it reflects external pressure from regulators rather than the
-intrinsic severity of the risk. It is used in the **executive summary**
-as a secondary sort: within each residual-risk tier, High-attention items
-surface first. A Watchlist risk under active CFPB or FCA scrutiny warrants
-different urgency than one flying under the radar.
-
----
-
 ## What the Outputs Show
 
-### `output/risk_register.csv`
-The complete 30-row register with every field and all four derived scores.
-This is the master document the risk team maintains and updates regularly.
-
-### `output/executive_summary.csv`
-Filtered to **Escalate and Watchlist items only**. Sorted by residual risk
-descending, then by regulatory attention (High → Medium → Low) within each
-tier. Includes the `regulatory_attention` column so the committee can
-immediately see which items are also under active regulator scrutiny.
-This is what gets presented at a Risk Committee or board meeting —
-leadership needs to see the items requiring attention, not the full register.
-
-### `output/top_5_risks.csv`
-The five risks with the highest residual score. A concise one-page summary
-of the firm's most pressing emerging exposures.
-
-### `output/risk_counts_by_category.csv`
-Aggregated view showing, per category: total risks, count by status,
-average residual score, and number of priority-flagged items. Shows
-which *areas* of the firm carry the most concentrated emerging risk.
-
-### `output/risk_heatmap.png`
-A **Likelihood × Impact scatter chart** — the standard visual tool used
-in risk management to present the portfolio at a glance.
-
-- **x-axis:** Likelihood (1=Rare → 5=Almost Certain)
-- **y-axis:** Impact (1=Negligible → 5=Critical)
-- **Colour:** Green = Monitor · Orange = Watchlist · Red = Escalate
-- **Star marker:** Priority-flagged items
-
-The top-right quadrant is the danger zone. Items clustering there are the
-ones a risk committee will ask about first.
+- **`risk_register.csv`** — the complete 30-row register with every field and
+  all four derived scores. The master document the risk team maintains.
+- **`executive_summary.csv`** — Escalate and Watchlist items only, sorted by
+  residual risk, then by regulatory attention within each tier. This is what
+  goes to a Risk Committee — the items needing attention, not the full register.
+- **`top_5_risks.csv`** — the five highest residual scores: a one-page view of
+  the firm's most pressing exposures.
+- **`risk_counts_by_category.csv`** — per category: total risks, count by
+  status, average residual score, and priority-flagged items. Shows which
+  *areas* of the firm carry the most concentrated risk.
+- **`risk_heatmap.png`** — the Likelihood × Impact chart shown above.
+  x = Likelihood (1 Rare → 5 Almost Certain), y = Impact (1 Negligible →
+  5 Critical), colour = status, star = priority flag.
 
 ---
 
-## Relevance to Strategy and Emerging Risk Roles
+## Project Structure
 
-This project mirrors the actual workflow of an emerging risk team:
+```
+/
+├── README.md               ← you are here
+├── requirements.txt        ← Python dependencies
+├── main.py                 ← runs the full pipeline
+├── data/
+│   └── risk_register_raw.csv    ← unscored input dataset (refreshed on run)
+├── output/
+│   ├── risk_register.csv        ← full 30-row scored register
+│   ├── executive_summary.csv    ← Escalate + Watchlist items for leadership
+│   ├── top_5_risks.csv          ← five highest residual-risk items
+│   ├── risk_counts_by_category.csv  ← aggregated view by category
+│   └── risk_heatmap.png         ← likelihood × impact heat map
+└── src/
+    ├── data_generator.py   ← builds the synthetic risk register (30 risks)
+    ├── scoring.py          ← inherent risk, residual risk, status, priority flag
+    └── reporting.py        ← generates all CSVs and the heat map
+```
 
-| Step | Real-World Activity | In This Project |
+---
+
+## Why This Matters for Risk Roles
+
+The pipeline mirrors the real workflow of an emerging-risk team:
+
+| Step | Real-world activity | In this project |
 |---|---|---|
-| **Identify** | Horizon scanning, regulatory bulletins, internal nominations | 30 synthetic risks across 11 categories |
-| **Score** | Risk committee scores likelihood, impact, velocity, controls | `scoring.py` — inherent risk = (L × I) + V; residual = inherent × (1 − CE) |
-| **Triage** | Classify risks into governance action tiers | `risk_status` — Escalate / Watchlist / Monitor |
-| **Prioritise** | Flag worsening high-exposure items for urgent action | `priority_flag` column |
-| **Report** | Board packs, committee updates, category roll-ups | Executive summary, top-5, category counts |
-| **Visualise** | Heat maps for Risk Committee and board presentations | `risk_heatmap.png` |
+| **Identify** | Horizon scanning, regulatory bulletins, internal nominations | 30 risks across 11 categories |
+| **Score** | Committee scores likelihood, impact, velocity, controls | `scoring.py` |
+| **Triage** | Sort risks into governance action tiers | `risk_status` |
+| **Prioritise** | Flag worsening high-exposure items | `priority_flag` |
+| **Report** | Board packs, committee updates, roll-ups | Summary, top-5, category counts |
+| **Visualise** | Heat maps for committee presentations | `risk_heatmap.png` |
+
+**A few talking points it sets up:**
+
+- *Inherent vs. residual* — inherent risk is how bad a threat is if you do
+  nothing; residual is what's left after controls. That gap is where risk
+  management actually lives.
+- *Velocity* — built into the inherent score so fast-movers get urgency credit
+  without penalising slow-burn existential risks.
+- *The priority flag* — catches the intersection of high residual exposure and
+  a worsening trend, which is exactly what a CRO escalates first.
 
 ---
 
-## Interview Talking Points
+## Limitations and Future Improvements
 
-**On the inherent vs. residual distinction:**
-> "Inherent risk tells you how bad a threat is if you do nothing. Residual
-> risk tells you what's left after your controls are applied. That gap is
-> where risk management actually lives — understanding how effective your
-> controls are and where they fall short."
+This is a focused portfolio project, not a production system. Known limitations
+and natural next steps:
 
-**On the heat map:**
-> "The top-right quadrant is the danger zone — high likelihood and high
-> impact. That's where your Escalate items cluster and the first place a
-> Risk Committee looks. The chart makes the whole portfolio readable in
-> under a minute."
-
-**On velocity:**
-> "Velocity is built into the inherent risk score — fast-moving threats get
-> a higher score because they leave less time for controls to activate.
-> A ransomware attack with velocity 5 scores (4×5)+5=25 inherent; the same
-> likelihood and impact with velocity 2 scores only 22. It's a deliberate
-> design choice: slow-burn risks like climate change or Basel IV aren't
-> penalised because you multiply by velocity, but fast-movers get
-> appropriate urgency credit."
-
-**On the priority flag:**
-> "The flag catches the intersection of two bad signals: residual exposure
-> is already high, and the trend is worsening. That combination is what
-> a Chief Risk Officer puts at the top of the board pack."
+- **Synthetic data.** The 30 risks are hand-built for clarity, not pulled from
+  live feeds. A production version would ingest real horizon-scanning sources.
+- **Static scoring weights.** Thresholds and the velocity premium are calibrated
+  to this dataset. A real framework would tune them against historical outcomes.
+- **No trend history.** `trend_direction` is a single label; tracking residual
+  scores over time would enable proper trajectory analysis.
+- **CSV outputs.** Reports are flat files. A dashboard (Streamlit / Power BI)
+  would make the register interactive for committee use.
+- **Single-run snapshot.** There's no scenario or stress-testing layer — a
+  useful extension for modelling how shocks shift the portfolio.
