@@ -69,6 +69,30 @@ All output files are written to `output/`.
 
 ---
 
+## Automated Validation
+
+This project ships with a GitHub Actions workflow
+(`.github/workflows/risk-output-validation.yml`) that automatically confirms
+the model runs end to end and produces the expected reporting outputs. It runs
+on every pull request into `main`, on pushes to `main`, and can be triggered
+manually from the Actions tab (`workflow_dispatch`).
+
+On each run it checks out the repo, sets up Python, installs the dependencies
+from `requirements.txt`, runs `python main.py`, and then validates the results:
+
+- all five expected output files are created
+  (`risk_register.csv`, `executive_summary.csv`, `top_5_risks.csv`,
+  `risk_counts_by_category.csv`, `risk_heatmap.png`)
+- the CSV reports are not empty
+- `risk_register.csv` contains exactly 30 risk rows
+- `top_5_risks.csv` contains exactly 5 rows
+- `risk_heatmap.png` exists and is a non-empty image
+
+If any check fails the build goes red, so a change that quietly breaks the
+model or its reporting outputs is caught before it reaches `main`.
+
+---
+
 ## How the Scoring Works
 
 The logic is deliberately simple and transparent — easy to explain to a
