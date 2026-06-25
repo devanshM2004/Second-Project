@@ -1,0 +1,92 @@
+name: Risk Output Validation
+
+# Runs the emerging-risk model end to end and confirms it produces the
+# expected reporting outputs (register, executive summary, top 5, category
+# counts, and heat map).
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run the risk model
+        run: python main.py
+
+      - name: Confirm all expected output files exist
+        run: |
+          for f in \
+            output/risk_register.csv \
+            output/executive_summary.csv \
+            output/top_5_risks.csv \
+            output/risk_counts_by_category.csv \
+            output/risk_heatmap.png
+          do
+            if [ ! -f "$f" ]; then
+              echo "::error::Missing expected output file: $f"
+              exit 1
+            fi
+            echo "Found: $f"
+          done
+
+      - name: Confirm CSV files are not empty
+        run: |
+          for f in \
+            output/risk_register.csv \
+            output/executive_summary.csv \
+            output/top_5_risks.csv \
+            output/risk_counts_by_category.csv
+          do
+            if [ ! -s "$f" ]; then
+              echo "::error::CSV file is empty: $f"
+              exit 1
+            fi
+            echo "Not empty: $f"
+          done
+
+      - name: Confirm risk_register.csv has 30 rows
+        run: |
+          rows=$(($(wc -l < output/risk_register.csv) - 1))   # subtract header
+          echo "risk_register.csv data rows: $rows"
+          if [ "$rows" -ne 30 ]; then
+            echo "::error::Expected 30 rows in risk_register.csv, found $rows"
+            exit 1
+          fi
+
+      - name: Confirm top_5_risks.csv has 5 rows
+        run: |
+          rows=$(($(wc -l < output/top_5_risks.csv) - 1))     # subtract header
+          echo "top_5_risks.csv data rows: $rows"
+          if [ "$rows" -ne 5 ]; then
+            echo "::error::Expected 5 rows in top_5_risks.csv, found $rows"
+            exit 1
+          fi
+
+      - name: Confirm risk_heatmap.png exists and is not empty
+        run: |
+          if [ ! -s output/risk_heatmap.png ]; then
+            echo "::error::risk_heatmap.png is missing or empty"
+            exit 1
+          fi
+          echo "risk_heatmap.png size: $(wc -c < output/risk_heatmap.png) bytes"
+
+      - name: Validation summary
+        run: echo "All risk output validation checks passed."
